@@ -3,6 +3,7 @@ import React, {useCallback, useEffect, useState} from 'react'
 import { ColorTab } from './ColorTab';
 import { HexColorPicker } from "react-colorful";
 import chroma from 'chroma-js';
+import ColorGroup from './ColorGroup';
 
 const findClosestNumber = (array, num) =>{
   let i = 0;
@@ -120,44 +121,44 @@ const ColorRange = () => {
 
   return (
     <div className='container mx-auto space-y-6'>
-      <div className='container mx-auto px-4 py-16 flex flex-col items-center gap-6'>
-    	  <p className='w-[500px] text-center text-white font-bold text-5xl'>
+      <div className='container mx-auto px-4 pt-16 pb-8 flex flex-col items-center gap-6'>
+    	  <p className='max-w-[500px] text-center text-white font-bold text-5xl'>
           <span style={{textDecorationColor:mainColor}} className='underline decoration-indigo-700'>Color Up</span> your websites quickly.          
         </p>
-        <p className='w-[500px] text-center text-neutral-300'>
-          Space to randomise. Use this to generate a unique color palette
+        <p className='max-w-[800px] text-center text-neutral-300 text-wrap px-5'>
+          Space to randomise. Use this to generate a unique color palette.
         </p>
 		  </div>
-      <div className='custom-layout px-96'>
+      <div className='custom-layout m-auto px-5 max-w-5xl'>
         <HexColorPicker color={mainColor} onChange={setMainColor} />
       </div>
-      <div className='flex flex-row px-96 h-14 gap-12'>
-        <div className='flex flex-row items-center gap-4 px-4 border border-neutral-500 rounded-xl focus-within:'>
+      <div className='flex flex-col justify-normal items-center md:flex-row md:items-start md:justify-center px-5 gap-4 md:gap-12'>
+        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={mainColor}  onChange={(value)=>{handleHexColor(value)}}/>
         </div>
 
-        <div className='flex flex-row items-center gap-4 px-4 border border-neutral-500 rounded-xl focus-within:'>
+        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:'>
           <span className='text-neutral-500 cursor-default'>RGB</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={mainColor}  onChange={(value)=>{handleHexColor(value)}}/>
         </div>
 
-        <div className='flex flex-row items-center gap-4 px-4 border border-neutral-500 rounded-xl focus-within:'>
+        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:'>
           <span className='text-neutral-500 cursor-default'>HSL</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={mainColor}  onChange={(value)=>{handleHexColor(value)}}/>
         </div>
 
       </div>
-      <div className='py-12 flex flex-row justify-center items-center gap-1'>
-        {
-          colorList?.map((colorval)=>(
-            <ColorTab
-              hex={colorval.hex}
-              shade={colorval.shade}
-            />
-          ))
-        }
+      <div className='flex flex-col items-center px-5 max-w-5xl mx-auto'>
+        <ColorGroup
+          colorList={colorList}
+        />
       </div>
+      <div className='flex flex-col items-center gap-2'>
+        
+      </div>
+
+      
     </div>
   )
 }

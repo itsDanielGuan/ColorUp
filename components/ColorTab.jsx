@@ -20,14 +20,14 @@ export const ColorTab = ({hex="#121212",shade,isAnchor=false}) => {
 	}
 
   return (
-    <button onClick={handleCopy} style={{backgroundColor:hex}} className='rounded-lg w-20 h-28 flex flex-col-reverse justify-between  items-center py-1 transition-[shadow,transform]  transform ease-in-out hover:shadow-xl hover:-translate-y-1'>
+    <button onClick={handleCopy} style={{backgroundColor:hex}} className='rounded-lg px-5 lg:px-0 w-full h-14 lg:h-28 flex flex-row lg:flex-col-reverse justify-between items-center py-1 transition-[shadow,transform]  transform ease-in-out hover:shadow-xl hover:-translate-y-1'>
 		
 		<div className='flex flex-col items-center'>
 			
 			<p style={{color:textOverlay}} className={`text-xs`}>
 				{hex}
 			</p>
-			<p style={{color:textOverlay}} className={`text-base`}>
+			<p style={{color:textOverlay}} className={`text-base font-semibold`}>
 				{shade}
 			</p>
 
