@@ -211,7 +211,7 @@ const ColorRange = () => {
         </p>
 		  </div>
       <div className='custom-layout m-auto px-5 max-w-5xl'>
-        <HexColorPicker color={HEX} onChange={setMainColor} />
+        <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
       <div className='flex flex-col justify-normal items-center md:flex-row md:items-start md:justify-center px-5 gap-4 md:gap-12'>
         <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300'>
