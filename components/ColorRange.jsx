@@ -208,7 +208,6 @@ const ColorRange = () => {
         </p>
         <p className='max-w-[800px] text-center text-neutral-300 text-wrap px-5'>
           Space to randomise. Use this to generate a unique color palette.
-          {chroma.valid(chroma(tempRGB).rgb(),"rgb").toString()}|{chroma(mainColor).rgb()}|{tempRGB}
         </p>
 		  </div>
       <div className='custom-layout m-auto px-5 max-w-5xl'>
