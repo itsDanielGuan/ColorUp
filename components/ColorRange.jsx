@@ -5,6 +5,7 @@ import { HexColorPicker } from "react-colorful";
 import chroma from 'chroma-js';
 import ColorGroup from './ColorGroup';
 import { stringify } from 'postcss';
+import DemoCard from './DemoCard';
 
 const findClosestNumber = (array, num) =>{
   let i = 0;
@@ -78,7 +79,7 @@ const generateColorRange = (color) =>{
   const colorDarkness = (1-colorHSL[2])
   const colorNearestDarknessIndex = findClosestNumber(colorPositions,colorDarkness)
   const colorList = generateList(color,colorDarkness,colorNearestDarknessIndex)
-  return colorList
+  return [colorList, colorNearestDarknessIndex]
 }
 
 const ColorRange = () => {
@@ -90,15 +91,27 @@ const ColorRange = () => {
   const [tempHEX, setTempHEX] = useState(chroma(mainColor).hex())
   const [RGB, setRGB] = useState(chroma(mainColor).rgb())
   const [tempRGB, setTempRGB] = useState(chroma(mainColor).rgb())
-  const [HSL, setHSL] = useState(chroma(mainColor).hsl())
-  const [tempHSL, setTempHSL] = useState(chroma(mainColor).hsl())
+  const [HSL, setHSL] = useState(chroma(mainColor).hsl().map((number,index)=>{
+    if(index===0){
+      return Math.round(isNaN(number)?0:number)
+    } else {
+      return Math.round(number*100)
+    }
+  }))
+  const [tempHSL, setTempHSL] = useState(chroma(mainColor).hsl().map((number,index)=>{
+    if(index===0){
+      return Math.round(isNaN(number)?0:number)
+    } else {
+      return Math.round(number*100)
+    }
+  }))
   //Range Generator
   const [colorList, setColorList] = useState([])
   useEffect(()=>{
-    console.log("use effect triggered")
+    // console.log("use effect triggered")
     if(chroma.valid(mainColor)){
-      console.log("use effect triggered, setting main color")
-      const colorRange = generateColorRange(chroma(mainColor).hex())
+      // console.log("use effect triggered, setting main color")
+      const colorRange = [...generateColorRange(chroma(mainColor).hex())]
       setColorList(colorRange)
 
       //propagate changes
@@ -160,9 +173,9 @@ const ColorRange = () => {
     setTempHSL(prev => {
       const initialHSL = [...prev.slice(0, position), Number(value), ...prev.slice(position + 1)]
       const adjustedHSL = [initialHSL[0],initialHSL[1]/100,initialHSL[2]/100]
-      console.log("sending to maincolor",adjustedHSL.toString())
+      // console.log("sending to maincolor",adjustedHSL.toString())
       if (chroma.valid(adjustedHSL, 'hsl')) {
-        console.log(chroma(adjustedHSL,"hsl").hsl(),"expected")
+        // console.log(chroma(adjustedHSL,"hsl").hsl(),"expected")
         setMainColor(chroma(adjustedHSL,"hsl").hex());
       }
       
@@ -180,6 +193,9 @@ const ColorRange = () => {
     else if(type === "HSL"){
       !chroma.valid(tempHSL)?setTempHSL(HSL):null
     }
+  }
+  const handleMobileRandomColor = (e) => {
+    setMainColor(chroma.random().hex())
   }
 
   const handleRandomColor = (e) => {
@@ -201,7 +217,7 @@ const ColorRange = () => {
   }, []);
 
   return (
-    <div className='container mx-auto space-y-6'>
+    <div className='container mx-auto space-y-6 max-w-5xl px-5'>
       <div className='container mx-auto px-4 pt-16 pb-8 flex flex-col items-center gap-6'>
     	  <p className='max-w-[500px] text-center text-white font-bold text-5xl'>
           <span style={{textDecorationColor:HEX}} className='underline decoration-indigo-700'>Color Up</span> your websites quickly.          
@@ -210,10 +226,11 @@ const ColorRange = () => {
           Space to randomise. Use this to generate a unique color palette.
         </p>
 		  </div>
-      <div className='custom-layout m-auto px-5 max-w-5xl'>
+      <div className='custom-layout m-auto max-w-5xl'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
       <div className='flex flex-col justify-normal items-center md:flex-row md:items-start md:justify-center px-5 gap-4 md:gap-12'>
+        <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 md:hidden'>Randomise</button>
         <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={tempHEX}  onChange={(e)=>{handleHEXChange(e.target.value)}} onBlur={()=>{handleBlur("HEX")}}/>
@@ -234,13 +251,18 @@ const ColorRange = () => {
         </div>
 
       </div>
-      <div className='flex flex-col items-center px-5 max-w-5xl mx-auto'>
+      <div className='flex flex-col items-center max-w-5xl mx-auto'>
         <ColorGroup
-          colorList={colorList}
+          colorList={colorList[0]}
+          anchorColorIndex={colorList[1]}
         />
       </div>
-      <div className='flex flex-col items-center gap-2'>
-        
+      <div className='grid grid-cols-3 gap-4'>
+        <DemoCard/>
+        <DemoCard/>
+        <DemoCard/>
+        <DemoCard/>
+        <DemoCard/>
       </div>
 
       

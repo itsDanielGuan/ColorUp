@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import chroma from 'chroma-js'
 
 
-export const ColorTab = ({hex="#121212",shade,isAnchor=false}) => {
+export const ColorTab = ({hex="#121212",shade,isAnchor=true, anchorColorIndex, index}) => {
 	const [textOverlay, setTextOverlay] = useState("#121212")
 	useEffect(()=>{
 		const colorChroma = chroma(hex)
@@ -21,24 +21,33 @@ export const ColorTab = ({hex="#121212",shade,isAnchor=false}) => {
 
   return (
     <button onClick={handleCopy} style={{backgroundColor:hex}} className='rounded-lg px-5 lg:px-0 w-full h-14 lg:h-28 flex flex-row lg:flex-col-reverse justify-between items-center py-1 transition-[shadow,transform]  transform ease-in-out hover:shadow-xl hover:-translate-y-1'>
-		
-		<div className='flex flex-col items-center'>
-			
-			<p style={{color:textOverlay}} className={`text-xs`}>
-				{hex}
-			</p>
-			<p style={{color:textOverlay}} className={`text-base font-semibold`}>
-				{shade}
-			</p>
+			<div className='flex flex-row-reverse lg:flex-col gap-4 lg:gap-2 items-center'>
+				{isAnchor?(
+					<p style={{color:textOverlay}} className={`text-xs opacity-70`}>
+						Basis
+					</p>
+				):(null)}
+				<div className='flex flex-col items-center'>
+					
+					
+					
+					<p style={{color:textOverlay}} className={`text-xs`}>
+						{hex}
+					</p>
 
-		</div>
-		{isCopy?(
-				<p style={{color:textOverlay}} className={`text-xs`}>
-					Copied
-				</p>
-		):(
-			null
-		)}
+					<p style={{color:textOverlay}} className={`text-base font-semibold`}>
+						{shade}
+					</p>
+
+				</div>
+			</div>
+
+			{isCopy?(
+					<p style={{color:textOverlay}} className={`text-xs`}>
+						Copied
+					</p>
+			):(null)}
+
     </button>
   )
 }

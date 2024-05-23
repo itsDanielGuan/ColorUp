@@ -11,6 +11,8 @@
   "dependencies": {
     "@uiw/react-color-chrome": "^2.1.1",
     "chroma-js": "^2.4.2",
+    "color-name-list": "^10.22.0",
+    "nearest-color": "^0.4.4",
     "next": "14.2.3",
     "react": "^18",
     "react-color": "^2.19.3",
