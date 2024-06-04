@@ -1,11 +1,12 @@
 "use client";
-import React, {useCallback, useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState, useRef} from 'react'
 import { ColorTab } from './ColorTab';
 import { HexColorPicker } from "react-colorful";
 import chroma from 'chroma-js';
 import ColorGroup from './ColorGroup';
 import { stringify } from 'postcss';
 import DemoCard from './DemoCard';
+import DemoGroup from './DemoGroup';
 
 const findClosestNumber = (array, num) =>{
   let i = 0;
@@ -194,6 +195,7 @@ const ColorRange = () => {
       !chroma.valid(tempHSL)?setTempHSL(HSL):null
     }
   }
+
   const handleMobileRandomColor = (e) => {
     setMainColor(chroma.random().hex())
   }
@@ -204,6 +206,9 @@ const ColorRange = () => {
       setMainColor(chroma.random().hex())
     }
   }
+
+  const stickyRef = useRef(null)
+
   useEffect(() => {
     const event = new KeyboardEvent('keydown', {
       key: 'Space',
@@ -213,12 +218,29 @@ const ColorRange = () => {
     });
     handleRandomColor(event)
     document.addEventListener("keydown", handleRandomColor);
+
+    const handleScroll = () => {
+      const stickyElement = stickyRef.current;
+      console.log(stickyElement.getBoundingClientRect().top)
+      if (!stickyElement) return;
+
+      if (stickyElement.getBoundingClientRect().top < 90) {
+        stickyElement.style.borderBottomWidth = "3px";
+        stickyElement.style.setProperty('--tw-border-opacity', '100'); // Set --tw-border-opacity to 100
+      } else {
+        stickyElement.style.borderBottomWidth = "0px";
+        stickyElement.style.setProperty('--tw-border-opacity', '0'); // Reset --tw-border-opacity to 0
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     return () => document.removeEventListener("keydown", handleRandomColor);
   }, []);
 
   return (
-    <div className='container mx-auto space-y-6 max-w-5xl px-5'>
-      <div className='container mx-auto px-4 pt-16 pb-8 flex flex-col items-center gap-6'>
+    <div className='container mx-auto max-w-5xl px-5'>
+      <div className='container mx-auto px-4 pt-16 pb-6 flex flex-col items-center gap-6'>  
     	  <p className='max-w-[500px] text-center text-white font-bold text-5xl'>
           <span style={{textDecorationColor:HEX}} className='underline decoration-indigo-700'>Color Up</span> your websites quickly.          
         </p>
@@ -226,43 +248,43 @@ const ColorRange = () => {
           Space to randomise. Use this to generate a unique color palette.
         </p>
 		  </div>
-      <div className='custom-layout m-auto max-w-5xl'>
+
+    
+      <div ref={stickyRef} style={{borderBottomColor:HEX}} className='custom-layout max-w-5xl sticky top-[72px] z-10 backdrop-blur rounded-none lg:rounded-lg -mx-5 px-5 py-4 -my-4 mt-12 transition-[borderWidth] ease-in-out'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
-      <div className='flex flex-col justify-normal items-center md:flex-row md:items-start md:justify-center px-5 gap-4 md:gap-12'>
-        <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 md:hidden'>Randomise</button>
-        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300'>
+
+      <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4'>
+        <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 sm:hidden'>Randomise</button>
+        <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={tempHEX}  onChange={(e)=>{handleHEXChange(e.target.value)}} onBlur={()=>{handleBlur("HEX")}}/>
         </div>
 
-        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300'>
+        <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>RGB</span>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[0]}  onChange={(e)=>{handleRGBChange(e.target.value,0)}} onBlur={()=>{handleBlur("RGB", 0)}}/>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[1]}  onChange={(e)=>{handleRGBChange(e.target.value,1)}} onBlur={()=>{handleBlur("RGB", 1)}}/>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[2]}  onChange={(e)=>{handleRGBChange(e.target.value,2)}} onBlur={()=>{handleBlur("RGB", 2)}}/>
         </div>
 
-        <div className='flex flex-row items-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300'>
+        <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>HSL</span>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[0]}  onChange={(e)=>{handleHSLChange(e.target.value,0)}} onBlur={()=>{handleBlur("HSL", 0)}}/>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[1]}  onChange={(e)=>{handleHSLChange(e.target.value,1)}} onBlur={()=>{handleBlur("HSL", 1)}}/>
           <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[2]}  onChange={(e)=>{handleHSLChange(e.target.value,2)}} onBlur={()=>{handleBlur("HSL", 2)}}/>
         </div>
-
       </div>
-      <div className='flex flex-col items-center max-w-5xl mx-auto'>
+
+      <div className='flex flex-col items-center max-w-5xl w-full mt-12'>
         <ColorGroup
           colorList={colorList[0]}
           anchorColorIndex={colorList[1]}
         />
       </div>
-      <div className='grid grid-cols-3 gap-4'>
-        <DemoCard/>
-        <DemoCard/>
-        <DemoCard/>
-        <DemoCard/>
-        <DemoCard/>
+
+      <div className='w-full mt-12'>
+        <DemoGroup/>
       </div>
 
       

@@ -2,7 +2,9 @@ import React from 'react'
 
 const DemoCard = () => {
   return (
-    <div className='w-full max-w-[340px] h-96 bg-white rounded-lg'>DemoCard</div>
+    <div className='w-full max-w-[340px] min-w-[200px] h-96 bg-white rounded-lg'>
+      DemoCard
+    </div>
   )
 }
 
