@@ -7,6 +7,8 @@ import ColorGroup from './ColorGroup';
 import { stringify } from 'postcss';
 import DemoCard from './DemoCard';
 import DemoGroup from './DemoGroup';
+import { light } from '@mui/material/styles/createPalette';
+import UtilitiesColorGroup from './UtilitiesColorGroup';
 
 const findClosestNumber = (array, num) =>{
   let i = 0;
@@ -48,6 +50,59 @@ const generateList = (color,darkness,darknessIndex) => {
   return colorOutputs
 }
 
+const generateRainbowRange = (lightness,saturation) => {
+  //takes in saturation and color
+  //low------------------------------->saturation
+  //| dull & dark  | strong & dark
+  //|--------------|-----------------
+  //| dull & pastel| strong & pastel    
+  //v
+  //lightness
+
+  let midLightness = Number(lightness)
+
+  if(midLightness>0.75){
+    midLightness=0.75
+  } else if (midLightness<0.25){
+    midLightness=0.25
+  }
+
+  const lightnessLevels = [midLightness-0.2,midLightness,midLightness+0.2]
+  
+  // const lightnessLevels = [
+  //   0.7,0.5,0.3
+  // ]
+  
+  const saturationLevel = 1
+
+  const huePositions = [
+    [0,"danger"], //red (danger/failure)
+    [25,"warning"], //orange (warning)
+    [60,"caution"], //yellow (caution)
+    [120,"success"], //green (success)
+    [155,"calm"], //teal (light success)
+    [180,"clear"], //sky (light info)
+    [220,"info"], //blue (info)
+    [245,"deep"], //indigo (deep info)
+    [270,"action"], //purple (attention)
+    [300,"attention"], //pink (attention)
+    [330,"urgent"], //hotpink (attention)
+  ]
+
+  const colorOutputs = [] //[[["#ffffff","#ffffff","#ffffff"],"caution"],[]]
+
+  for(let [hue,hueType] of huePositions){
+    const hueGroup = []
+    for(let lightnessLevel of lightnessLevels){
+      hueGroup.push(chroma(hue,saturationLevel,lightnessLevel,"hsl").hex())
+    }
+    const hueOutputs = [[...hueGroup],hueType]
+    colorOutputs.push([...hueOutputs])
+  }
+  return colorOutputs
+
+}
+
 const generateColorRange = (color) =>{
   const colorPositions = [
     0.05,
@@ -62,19 +117,6 @@ const generateColorRange = (color) =>{
     0.9,
     0.95
   ]
-  const lightnessLevels = [
-    0.95,
-    0.9,
-    0.8,
-    0.7,
-    0.6,
-    0.5,
-    0.4,
-    0.3,
-    0.2,
-    0.1,
-    0.05
-  ]
   const colorUsed = chroma(color)
   const colorHSL = colorUsed.hsl()
   const colorDarkness = (1-colorHSL[2])
@@ -87,6 +129,7 @@ const ColorRange = () => {
   
   //Main Color
   const [mainColor, setMainColor] = useState("5c00ff")
+
     //Color Infos
   const [HEX, setHEX] = useState(chroma(mainColor).hex())
   const [tempHEX, setTempHEX] = useState(chroma(mainColor).hex())
@@ -107,13 +150,22 @@ const ColorRange = () => {
     }
   }))
   //Range Generator
-  const [colorList, setColorList] = useState([])
+  const [colorList, setColorList] = useState([]) // [[color,...,color],maincolorindex]
+  const [utilitiesColorList, setUtilitiesColorList] = useState([]) //[]
+
+
   useEffect(()=>{
     // console.log("use effect triggered")
     if(chroma.valid(mainColor)){
       // console.log("use effect triggered, setting main color")
+      // console.log(generateColorRange(chroma(mainColor).hex()))
       const colorRange = [...generateColorRange(chroma(mainColor).hex())]
       setColorList(colorRange)
+
+      
+      const rainbowColorRange = generateRainbowRange(chroma(mainColor).luminance())
+      console.log(JSON.stringify(rainbowColorRange))
+      setUtilitiesColorList(rainbowColorRange)
 
       //propagate changes
       setHEX(chroma(mainColor).hex().toUpperCase())
@@ -224,11 +276,21 @@ const ColorRange = () => {
       console.log(stickyElement.getBoundingClientRect().top)
       if (!stickyElement) return;
 
-      if (stickyElement.getBoundingClientRect().top < 90) {
-        stickyElement.style.borderBottomWidth = "3px";
+      if (stickyElement.getBoundingClientRect().top < 74) {
+        stickyElement.style.borderBottomWidth = "1px";
+        
+        stickyElement.style.borderRightWidth = "1px";
+        
+        stickyElement.style.borderLeftWidth = "1px";
+        // stickyElement.style.backgroundColor = "#303030";
         stickyElement.style.setProperty('--tw-border-opacity', '100'); // Set --tw-border-opacity to 100
       } else {
         stickyElement.style.borderBottomWidth = "0px";
+        
+        stickyElement.style.borderRightWidth = "0px";
+        
+        stickyElement.style.borderLeftWidth = "0px";
+        // stickyElement.style.backgroundColor = "#10101000";
         stickyElement.style.setProperty('--tw-border-opacity', '0'); // Reset --tw-border-opacity to 0
       }
     };
@@ -250,11 +312,11 @@ const ColorRange = () => {
 		  </div>
 
     
-      <div ref={stickyRef} style={{borderBottomColor:HEX}} className='custom-layout max-w-5xl sticky top-[72px] z-10 backdrop-blur rounded-none lg:rounded-lg -mx-5 px-5 py-4 -my-4 mt-12 transition-[borderWidth] ease-in-out'>
+      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl sticky top-[72px] z-10 backdrop-blur rounded-none border-neutral-500 lg:rounded-b-lg -mx-5 px-5 py-4 -my-4 mt-12 transition-[background-color] ease-in-out'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
 
-      <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4'>
+      <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4 '>
         <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 sm:hidden'>Randomise</button>
         <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
@@ -283,7 +345,17 @@ const ColorRange = () => {
         />
       </div>
 
+      <div className='flex flex-col items-center mt-12'>
+        <UtilitiesColorGroup colorList={utilitiesColorList}/>
+
+      </div>
+
       <div className='w-full mt-12'>
+
+      </div>
+
+      <div className='w-full mt-12'>
+        
         <DemoGroup/>
       </div>
 

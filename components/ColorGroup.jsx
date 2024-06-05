@@ -30,6 +30,9 @@ const nearest = nearestColor.from(colors);
 
 
 const ColorGroup = ({colorList, anchorColorIndex}) => {
+  if (!colorList || colorList.length === 0 || anchorColorIndex === undefined) {
+    return null;
+  }
   const [colorName, setColorName] = useState("")
   const [formattedTailwindData, setFormattedTailwindData] = useState("");
   const [open, setOpen] = useState(false);
@@ -109,13 +112,13 @@ const ColorGroup = ({colorList, anchorColorIndex}) => {
                       <CheckRoundedIcon className='w-full h-full '/>
                     </button>
                   ):(
-                    <button className='w-11 h-11 p-2 text-neutral-500 hover:text-neutral-300 transition-colors ease-in-out' onClick={handleCopy}>
+                    <button className='w-11 h-11 p-2 text-neutral-500 hover:text-neutral-300 transition-colors duration ease-in-out' onClick={handleCopy}>
                       <ContentPasteIcon className='w-full h-full '/>
                     </button>
                   )}
                   
-                  <button className='w-12 h-12 p-2 text-neutral-500 hover:text-neutral-300 transition-colors ease-in-out' onClick={handleClose}>
-                    <CloseIcon className='w-full h-full '/>
+                  <button className='w-12 h-12 p-2 -mr-3 flex justify-center items-center text-neutral-500 hover:text-neutral-300 transition-colors ease-in-out' onClick={handleClose}>
+                    <CloseIcon className='w-full h-full flex flex-row justify-center items-center'/>
                   </button>
                 </div>
 
