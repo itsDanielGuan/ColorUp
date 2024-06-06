@@ -38,10 +38,11 @@ const UtilitiesColorGroup = ({colorList}) => {
       <div className=' w-full flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-1'>
       {/* [[["#ffffff","#ffffff","#ffffff"],"caution"],[]] */}
         {
-          colorList?.map((hueGroup)=>
+          colorList?.map((hueGroup, i)=>
           <UtilitiesColorTab
             hueList={hueGroup[0]}
             hueType={hueGroup[1]}
+            key={i}
           />
           )
         }

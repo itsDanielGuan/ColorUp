@@ -1,7 +1,7 @@
 import React,{ useEffect, useState } from 'react'
 
 const DemoCard = ({variant, colorList, utilitiesColorList}) => {
-  console.log(colorList)
+  // console.log(colorList)
   if(!colorList) return null
   const [content, setContent] = useState(<></>)
 

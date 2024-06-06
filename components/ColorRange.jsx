@@ -1,14 +1,12 @@
 "use client";
-import React, {useCallback, useEffect, useState, useRef} from 'react'
-import { ColorTab } from './ColorTab';
-import { HexColorPicker } from "react-colorful";
 import chroma from 'chroma-js';
+import { useEffect, useRef, useState } from 'react';
+import { HexColorPicker } from "react-colorful";
 import ColorGroup from './ColorGroup';
-import { stringify } from 'postcss';
-import DemoCard from './DemoCard';
 import DemoGroup from './DemoGroup';
-import { light } from '@mui/material/styles/createPalette';
 import UtilitiesColorGroup from './UtilitiesColorGroup';
+import ColorizeIcon from '@mui/icons-material/Colorize';
+
 
 const findClosestNumber = (array, num) =>{
   let i = 0;
@@ -68,12 +66,10 @@ const generateUtilitiesRange = (lightness,saturation) => {
   }
 
   const lightnessLevels = [midLightness+0.2,midLightness,midLightness-0.2]
-  console.log(lightnessLevels)
-  
+  // console.log(lightnessLevels)
   // const lightnessLevels = [
   //   0.7,0.5,0.3
   // ]
-  
   let saturationLevel = saturation
   if(saturationLevel < 0.25){
     saturationLevel = 0.25
@@ -251,6 +247,24 @@ const ColorRange = () => {
       !chroma.valid(tempHSL)?setTempHSL(HSL):null
     }
   }
+  const [eyedropAvailable, setEyedropAvailable] = useState(false)
+  
+  useEffect(()=>{
+    console.log(window.EyeDropper?true:false)
+    setEyedropAvailable("EyeDropper" in window?true:false)
+  },[])
+
+  const handleEyeDrop = async() => {
+    try{
+      const eyeDropper = new EyeDropper();
+      const result = await eyeDropper.open()
+      const colorSelected = await result.sRGBHex
+      setMainColor(colorSelected)
+    } catch (error) {
+      console.log("User cancelled eyedropper")
+    }
+
+  }
 
   const handleMobileRandomColor = (e) => {
     setMainColor(chroma.random().hex())
@@ -320,7 +334,21 @@ const ColorRange = () => {
       </div>
 
       <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4'>
-        <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 sm:hidden'>Randomise</button>
+        <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border flex-1 border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 sm:hidden'>
+          Randomise
+        </button>
+        {
+          eyedropAvailable?(
+            <button onClick={handleEyeDrop} className='flex flex-row justify-center items-center px-4 py-4 border border-neutral-500 hover:border-neutral-300 group rounded-xl'>
+              <div>
+                <ColorizeIcon className='text-neutral-500 hover:text-neutral-300 group-hover:text-neutral-300'/>
+              </div>
+            </button>
+          ):(
+            null
+          )
+        }
+        
         <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
           <input className='w-20 bg-transparent text-white outline-none' type="text" maxLength="7" value={tempHEX}  onChange={(e)=>{handleHEXChange(e.target.value)}} onBlur={()=>{handleBlur("HEX")}}/>
@@ -328,17 +356,18 @@ const ColorRange = () => {
 
         <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>RGB</span>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[0]}  onChange={(e)=>{handleRGBChange(e.target.value,0)}} onBlur={()=>{handleBlur("RGB", 0)}}/>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[1]}  onChange={(e)=>{handleRGBChange(e.target.value,1)}} onBlur={()=>{handleBlur("RGB", 1)}}/>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempRGB[2]}  onChange={(e)=>{handleRGBChange(e.target.value,2)}} onBlur={()=>{handleBlur("RGB", 2)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempRGB[0]}  onChange={(e)=>{handleRGBChange(e.target.value,0)}} onBlur={()=>{handleBlur("RGB", 0)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempRGB[1]}  onChange={(e)=>{handleRGBChange(e.target.value,1)}} onBlur={()=>{handleBlur("RGB", 1)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempRGB[2]}  onChange={(e)=>{handleRGBChange(e.target.value,2)}} onBlur={()=>{handleBlur("RGB", 2)}}/>
         </div>
 
         <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>HSL</span>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[0]}  onChange={(e)=>{handleHSLChange(e.target.value,0)}} onBlur={()=>{handleBlur("HSL", 0)}}/>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[1]}  onChange={(e)=>{handleHSLChange(e.target.value,1)}} onBlur={()=>{handleBlur("HSL", 1)}}/>
-          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputmode="numeric" maxLength="3" value={tempHSL[2]}  onChange={(e)=>{handleHSLChange(e.target.value,2)}} onBlur={()=>{handleBlur("HSL", 2)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempHSL[0]}  onChange={(e)=>{handleHSLChange(e.target.value,0)}} onBlur={()=>{handleBlur("HSL", 0)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempHSL[1]}  onChange={(e)=>{handleHSLChange(e.target.value,1)}} onBlur={()=>{handleBlur("HSL", 1)}}/>
+          <input className='w-8 text-center bg-transparent text-white outline-none' type="text" inputMode="numeric" maxLength="3" value={tempHSL[2]}  onChange={(e)=>{handleHSLChange(e.target.value,2)}} onBlur={()=>{handleBlur("HSL", 2)}}/>
         </div>
+        
       </div>
 
       <div className='flex flex-col items-center max-w-5xl w-full mt-12'>
