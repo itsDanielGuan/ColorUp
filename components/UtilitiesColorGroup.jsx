@@ -35,7 +35,7 @@ const UtilitiesColorGroup = ({colorList}) => {
           </button>
         </div>
       </div>
-      <div className=' w-full flex flex-col lg:flex-row justify-center items-center gap-2'>
+      <div className=' w-full flex flex-col lg:flex-row justify-center items-center gap-2 lg:gap-1'>
       {/* [[["#ffffff","#ffffff","#ffffff"],"caution"],[]] */}
         {
           colorList?.map((hueGroup)=>

@@ -3,15 +3,18 @@
 @tailwind utilities;
 
 .custom-layout .react-colorful {
-    width:auto
+    width:auto;
+    height:100%;
   }
   
-.custom-layout .react-colorful__saturation {
+  .custom-layout .react-colorful__saturation {
+    /* height:100%; */
     margin: 0 0 15px 0;
     border-radius: 5px;
     border-bottom: none;
   }
-
-.custom-layout .react-colorful__hue {
+  
+  .custom-layout .react-colorful__hue {
+    /* height:100%; */
     border-radius:5px
 }

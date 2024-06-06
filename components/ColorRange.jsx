@@ -50,7 +50,7 @@ const generateList = (color,darkness,darknessIndex) => {
   return colorOutputs
 }
 
-const generateRainbowRange = (lightness,saturation) => {
+const generateUtilitiesRange = (lightness,saturation) => {
   //takes in saturation and color
   //low------------------------------->saturation
   //| dull & dark  | strong & dark
@@ -67,26 +67,30 @@ const generateRainbowRange = (lightness,saturation) => {
     midLightness=0.25
   }
 
-  const lightnessLevels = [midLightness-0.2,midLightness,midLightness+0.2]
+  const lightnessLevels = [midLightness+0.2,midLightness,midLightness-0.2]
+  console.log(lightnessLevels)
   
   // const lightnessLevels = [
   //   0.7,0.5,0.3
   // ]
   
-  const saturationLevel = 1
+  let saturationLevel = saturation
+  if(saturationLevel < 0.25){
+    saturationLevel = 0.25
+  }
 
   const huePositions = [
-    [0,"danger"], //red (danger/failure)
-    [25,"warning"], //orange (warning)
-    [60,"caution"], //yellow (caution)
-    [120,"success"], //green (success)
-    [155,"calm"], //teal (light success)
-    [180,"clear"], //sky (light info)
-    [220,"info"], //blue (info)
-    [245,"deep"], //indigo (deep info)
-    [270,"action"], //purple (attention)
-    [300,"attention"], //pink (attention)
-    [330,"urgent"], //hotpink (attention)
+    [0,"Danger"], //red (danger/failure)
+    [25,"Warning"], //orange (warning)
+    [60,"Caution"], //yellow (caution)
+    [120,"Success"], //green (success)
+    [155,"Calm"], //teal (light success)
+    [180,"Clear"], //sky (light info)
+    [220,"Info"], //blue (info)
+    [245,"Deep"], //indigo (deep info)
+    [270,"Action"], //purple (attention)
+    [300,"Attention"], //pink (attention)
+    [330,"Urgent"], //hotpink (attention)
   ]
 
   const colorOutputs = [] //[[["#ffffff","#ffffff","#ffffff"],"caution"],[]]
@@ -163,8 +167,8 @@ const ColorRange = () => {
       setColorList(colorRange)
 
       
-      const rainbowColorRange = generateRainbowRange(chroma(mainColor).luminance())
-      console.log(JSON.stringify(rainbowColorRange))
+      const rainbowColorRange = generateUtilitiesRange(chroma(mainColor).hsl()[2],chroma(mainColor).hsl()[1])
+      // console.log(JSON.stringify(rainbowColorRange))
       setUtilitiesColorList(rainbowColorRange)
 
       //propagate changes
@@ -273,7 +277,6 @@ const ColorRange = () => {
 
     const handleScroll = () => {
       const stickyElement = stickyRef.current;
-      console.log(stickyElement.getBoundingClientRect().top)
       if (!stickyElement) return;
 
       if (stickyElement.getBoundingClientRect().top < 74) {
@@ -312,11 +315,11 @@ const ColorRange = () => {
 		  </div>
 
     
-      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl sticky top-[72px] z-10 backdrop-blur rounded-none border-neutral-500 lg:rounded-b-lg -mx-5 px-5 py-4 -my-4 mt-12 transition-[background-color] ease-in-out'>
+      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl h-48 md:h-56 sticky top-[72px] z-10 backdrop-blur rounded-none border-neutral-500 lg:rounded-b-lg -mx-5 px-5 pt-4 pb-4 -mb-4 mt-6 md:mt-14 transition-[background-color] ease-in-out'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
 
-      <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4 '>
+      <div className='flex flex-row flex-wrap justify-center items-center mt-6 lg:flex-row lg:items-start lg:justify-center gap-4 lg:gap-4'>
         <button onClick={handleMobileRandomColor} className='flex flex-row items-center justify-center text-neutral-500 px-4 py-4 border border-neutral-500 rounded-xl transition-color ease-in-out hover:text-neutral-300 hover:border-neutral-300 sm:hidden'>Randomise</button>
         <div className='flex flex-row items-center justify-center gap-4 px-4 py-4 border border-neutral-500 rounded-xl focus-within:border-neutral-300 w-auto flex-1 lg:w-full'>
           <span className='text-neutral-500 cursor-default'>Hex</span>
@@ -346,17 +349,17 @@ const ColorRange = () => {
       </div>
 
       <div className='flex flex-col items-center mt-12'>
-        <UtilitiesColorGroup colorList={utilitiesColorList}/>
-
+        <UtilitiesColorGroup 
+          colorList={utilitiesColorList}
+        />
       </div>
 
       <div className='w-full mt-12'>
-
+        {/* potential rainbow circle */}
       </div>
 
       <div className='w-full mt-12'>
-        
-        <DemoGroup/>
+        <DemoGroup colorList={colorList[0]} utilitiesColorList={utilitiesColorList}/>
       </div>
 
       
