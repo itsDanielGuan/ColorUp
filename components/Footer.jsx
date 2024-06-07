@@ -15,10 +15,11 @@ const Footer = () => {
 
 				<div className='flex flex-col items-center xl:items-start xl:flex-row justify-between w-full gap-y-12'>
 					<div className='flex flex-col gap-12 flex-grow'>
-						<div className='flex'>
+						<div className='flex flex-col w-fit items-center xl:items-start'>
 							<button className='text-white text-5xl font-extrabold group hover:text-indigo-500 transition-colors ease-in-out'>
 								Color<span className='text-indigo-500 group-hover:text-white'>Up</span>
 							</button>
+							by Daniel Guan
 						</div>
 						<div className='flex flex-col gap-6 items-center xl:items-start'>
 							<div className="text-white flex flex-col items-center xl:items-start">
