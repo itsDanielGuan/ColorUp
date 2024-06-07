@@ -247,9 +247,11 @@ const ColorRange = () => {
       !chroma.valid(tempHSL)?setTempHSL(HSL):null
     }
   }
+
   const [eyedropAvailable, setEyedropAvailable] = useState(false)
   
   useEffect(()=>{
+    console.log("EyeDropper" in window?true:false)
     console.log(window.EyeDropper?true:false)
     setEyedropAvailable("EyeDropper" in window?true:false)
   },[])
@@ -293,7 +295,7 @@ const ColorRange = () => {
       const stickyElement = stickyRef.current;
       if (!stickyElement) return;
 
-      if (stickyElement.getBoundingClientRect().top < 74) {
+      if (stickyElement.getBoundingClientRect().top < 58) {
         stickyElement.style.borderBottomWidth = "1px";
         
         stickyElement.style.borderRightWidth = "1px";
@@ -329,7 +331,7 @@ const ColorRange = () => {
 		  </div>
 
     
-      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl h-48 md:h-56 sticky top-[72px] z-10 backdrop-blur rounded-none border-neutral-500 lg:rounded-b-lg -mx-5 px-5 pt-4 pb-4 -mb-4 mt-6 md:mt-14 transition-[background-color] ease-in-out'>
+      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl h-48 md:h-56 sticky top-[56px] z-10 backdrop-blur rounded-none border-neutral-700 lg:rounded-b-lg -mx-5 px-5 pt-4 pb-4 -mb-4 mt-6 md:mt-14 transition-[background-color] ease-in-out'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
 

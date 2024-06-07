@@ -8,6 +8,9 @@ module.exports = {
   darkMode: 'selector',
   theme: {
     extend: {
+      fontFamily:{
+        Danfo:["Danfo","sans-serif"]
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
