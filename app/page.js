@@ -9,7 +9,7 @@ export default function Home() {
     <main>
       <div className="">
         <Header/>
-        <div className="bg-neutral-950 min-h-screen pb-16">
+        <div className="bg-neutral-950 min-h-screen pb-16 overflow-clip">
           <Hero/>
           <ColorRange/>
         </div>

@@ -6,47 +6,7 @@ import ColorGroup from './ColorGroup';
 import DemoGroup from './DemoGroup';
 import UtilitiesColorGroup from './UtilitiesColorGroup';
 import ColorizeIcon from '@mui/icons-material/Colorize';
-
-
-const findClosestNumber = (array, num) =>{
-  let i = 0;
-  let minDiff = 1000;
-  let ans;
-  for (i in array) {
-    let m = Math.abs(num - array[i]);
-    if (m < minDiff) {
-      minDiff = m;
-      ans = i;
-    }
-  }
-  return ans;
-}
-
-const generateList = (color,darkness,darknessIndex) => {
-  const colorPositions = [
-    0.05,
-    0.1,
-    0.2,
-    0.3,
-    0.4,
-    0.5,
-    0.6,
-    0.7,
-    0.8,
-    0.9,
-    0.95
-  ]
-  const colorOutputs = [
-    
-  ]
-  //potential to do some scaling to move towards actual color for greater consistency
-  const scale = chroma.scale(['FFFFFF',color,'000000']).mode('hsl').domain([0,darkness,1])
-  for(let i in colorPositions){
-    colorOutputs.push({shade:colorPositions[i]*1000,hex:scale(colorPositions[i]).hex().toString()})
-  }
-  colorOutputs[darknessIndex] = {shade:colorPositions[darknessIndex]*1000,hex:chroma(color).hex().toString()}
-  return colorOutputs
-}
+import GreyColorGroup from './GreyColorGroup';
 
 const generateUtilitiesRange = (lightness,saturation) => {
   //takes in saturation and color
@@ -104,6 +64,50 @@ const generateUtilitiesRange = (lightness,saturation) => {
 }
 
 const generateColorRange = (color) =>{
+  const findClosestNumber = (array, num) =>{
+    let i = 0;
+    let minDiff = 1000;
+    let ans;
+    for (i in array) {
+      let m = Math.abs(num - array[i]);
+      if (m < minDiff) {
+        minDiff = m;
+        ans = i;
+      }
+    }
+    return ans;
+  }
+  const generateList = (color,darkness,darknessIndex) => {
+    const colorPositions = [
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95
+    ]
+    const colorOutputs = [
+      
+    ]
+    //potential to do some scaling to move towards actual color for greater consistency
+    const scale = chroma.scale(['FFFFFF',color,'000000']).mode('hsl').domain([0,darkness,1])
+    for(let i = 0;i<colorPositions.length;i++){
+      colorOutputs.push(
+        {
+          shade:colorPositions[i]*1000,
+          hex:scale(colorPositions[i]).hex().toString()
+        }
+      )
+    }
+    colorOutputs[darknessIndex] = {shade:colorPositions[darknessIndex]*1000,hex:chroma(color).hex().toString()}
+    return colorOutputs
+  }
+
   const colorPositions = [
     0.05,
     0.1,
@@ -125,12 +129,44 @@ const generateColorRange = (color) =>{
   return [colorList, colorNearestDarknessIndex]
 }
 
+const generateGreyRange = (hue,saturation=0.05) => {
+  const colorPositions = [
+    0.05,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    0.95
+  ]
+  const colorOutputs = [
+    
+  ]
+  
+  const saturationLevel = saturation
+  for(let i = 0;i<colorPositions.length;i++){
+    colorOutputs.push(
+      {
+        shade:colorPositions[i]*1000,
+        hex:chroma(hue,saturationLevel,1-colorPositions[i],"hsl").hex().toString()
+      }
+    )
+  }
+  console.log(JSON.stringify(colorOutputs))
+  return colorOutputs
+
+}
+
 const ColorRange = () => {
   
   //Main Color
   const [mainColor, setMainColor] = useState("5c00ff")
 
-    //Color Infos
+  //Color Infos
   const [HEX, setHEX] = useState(chroma(mainColor).hex())
   const [tempHEX, setTempHEX] = useState(chroma(mainColor).hex())
   const [RGB, setRGB] = useState(chroma(mainColor).rgb())
@@ -149,23 +185,35 @@ const ColorRange = () => {
       return Math.round(number*100)
     }
   }))
-  //Range Generator
-  const [colorList, setColorList] = useState([]) // [[color,...,color],maincolorindex]
-  const [utilitiesColorList, setUtilitiesColorList] = useState([]) //[]
 
+  //Primary Range Generator
+  const [colorList, setColorList] = useState([]) // [[color,...,color],maincolorindex]
+  //Utilities Range Generator
+  const [utilitiesColorList, setUtilitiesColorList] = useState([]) //[]
+  const [isUtilitiesLocked, setIsUtilitiesLocked] = useState(false)
+  //Grey Range Generator
+  const [greyColorList,setGreyColorList] = useState([])
+  const [isGreyLocked,setIsGreyLocked] = useState(false)
 
   useEffect(()=>{
     // console.log("use effect triggered")
     if(chroma.valid(mainColor)){
       // console.log("use effect triggered, setting main color")
       // console.log(generateColorRange(chroma(mainColor).hex()))
-      const colorRange = [...generateColorRange(chroma(mainColor).hex())]
-      setColorList(colorRange)
+      const primaryColorRange = generateColorRange(chroma(mainColor).hex())
+      setColorList(primaryColorRange)
 
-      
-      const rainbowColorRange = generateUtilitiesRange(chroma(mainColor).hsl()[2],chroma(mainColor).hsl()[1])
-      // console.log(JSON.stringify(rainbowColorRange))
-      setUtilitiesColorList(rainbowColorRange)
+      if(!isUtilitiesLocked){
+        const utilitiesColorRange = generateUtilitiesRange(chroma(mainColor).hsl()[2],chroma(mainColor).hsl()[1])
+        setUtilitiesColorList(utilitiesColorRange)
+      }
+
+      if(!isGreyLocked){
+        const greyColorRange = generateGreyRange(chroma(mainColor).hsl()[0])
+        setGreyColorList(greyColorRange)
+      }
+
+
 
       //propagate changes
       setHEX(chroma(mainColor).hex().toUpperCase())
@@ -331,7 +379,7 @@ const ColorRange = () => {
 		  </div>
 
     
-      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl h-48 md:h-56 sticky top-[56px] z-10 backdrop-blur rounded-none border-neutral-700 lg:rounded-b-lg -mx-5 px-5 pt-4 pb-4 -mb-4 mt-6 md:mt-14 transition-[background-color] ease-in-out'>
+      <div ref={stickyRef} style={{}} className='custom-layout max-w-5xl h-48 md:h-56 sticky top-[56px] z-50 backdrop-blur rounded-none border-neutral-700 lg:rounded-b-lg -mx-5 px-5 pt-4 pb-4 -mb-4 mt-6 md:mt-14 transition-[background-color] ease-in-out'>
         <HexColorPicker color={chroma(mainColor).hex()} onChange={setMainColor} />
       </div>
 
@@ -378,10 +426,20 @@ const ColorRange = () => {
           anchorColorIndex={colorList[1]}
         />
       </div>
+      
+      <div className='flex flex-col items-center max-w-5xl w-full mt-12'>
+        <GreyColorGroup
+          colorList={greyColorList}
+          isGreyLocked={isGreyLocked}
+          setIsGreyLocked={setIsGreyLocked}
+        />
+      </div>
 
       <div className='flex flex-col items-center mt-12'>
         <UtilitiesColorGroup 
           colorList={utilitiesColorList}
+          isUtilitiesLocked={isUtilitiesLocked}
+          setIsUtilitiesLocked={setIsUtilitiesLocked}
         />
       </div>
 
@@ -390,7 +448,11 @@ const ColorRange = () => {
       </div>
 
       <div className='w-full mt-12'>
-        <DemoGroup colorList={colorList[0]} utilitiesColorList={utilitiesColorList}/>
+        <DemoGroup 
+          colorList={colorList[0]} 
+          utilitiesColorList={utilitiesColorList} 
+          greyColorList={greyColorList}
+        />
       </div>
 
       

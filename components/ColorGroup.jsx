@@ -81,8 +81,10 @@ const ColorGroup = ({colorList, anchorColorIndex}) => {
   return (
     <div className='w-full flex flex-col gap-6'>
       <div className='flex flex-row justify-between'>
-        <div className='text-white font-medium '>
-          {colorName}
+        <div className='text-neutral-300 flex flex-row gap-2'>
+          <span className='font-bold text-white'>Primary</span>
+          <span className='font-bold text-white'>|</span>
+          <span>{colorName}</span>
         </div>
         <div>
           <Dialog

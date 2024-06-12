@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import chroma from 'chroma-js'
 
 
-export const ColorTab = ({hex="#121212",shade,isAnchor=true, anchorColorIndex, index}) => {
+export const ColorTab = ({hex="#121212",shade,isAnchor=false, anchorColorIndex, index}) => {
 	const [textOverlay, setTextOverlay] = useState("#121212")
 	useEffect(()=>{
 		const colorChroma = chroma(hex)
