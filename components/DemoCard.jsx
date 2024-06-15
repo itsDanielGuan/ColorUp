@@ -39,14 +39,32 @@ const DemoCard = ({variant, colorList, utilitiesColorList, greyColorList}) => {
       )
     } else if (variant===1){
       setContent(
-        <div style={{}} className='w-full h-full'>
-          <div>
-            Demo {variant}: {colorList[variant%11].hex}
+        <div style={{backgroundColor:greyColorList[0].hex}} className=' w-full h-full'>
+        <div className='grid grid-cols-4 grid-rows-5 grid-flow-dense w-full h-full gap-0'>
+          <div style={{backgroundColor:greyColorList[4].hex}} className='col-start-1 z-[1] rounded-full col-span-3 row-start-1 row-span-1'>
           </div>
-          <div>
+          <div style={{backgroundColor:greyColorList[7].hex}} className='col-start-4 z-[2] rounded-full col-span-1 row-start-4 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[10].hex}} className='col-start-4 z-[1] rounded-full col-span-1 row-start-1 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[5].hex}} className='col-start-2 z-[1] rounded-full col-span-3 row-start-2 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[8].hex}} className='col-start-2 z-[2] rounded-full col-span-2 row-start-3 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[9].hex}} className='col-start-1 z-[1] rounded-full col-span-3 row-start-4 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[6].hex}} className='col-start-1 z-[2] rounded-full col-span-4 row-start-5 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[2].hex}} className='col-start-3 z-[2] rounded-full col-span-1 row-start-4 row-span-1'>
+          </div>
+          <div style={{backgroundColor:greyColorList[3].hex}} className='col-start-1 col-span-3 row-start-1 row-span-5'>
+          </div>
+          <div style={{backgroundColor:greyColorList[1].hex}} className='col-start-2 z-[1] rounded-full col-span-1 row-start-2 row-span-3'>
+          </div>
 
-          </div>
+
         </div>
+      </div>
       )
     } else if (variant===2){
       setContent(

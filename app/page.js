@@ -7,13 +7,8 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main>
-      <div className="">
-        <Header/>
-        <div className="bg-neutral-950 min-h-screen pb-16 overflow-clip">
-          <Hero/>
-          <ColorRange/>
-        </div>
-        <Footer/>
+      <div className="bg-neutral-950 min-h-screen pb-16 overflow-clip">
+        <ColorRange/>
       </div>
     </main>
   );
