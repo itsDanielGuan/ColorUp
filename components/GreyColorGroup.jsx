@@ -34,14 +34,18 @@ const nearest = nearestColor.from(colors);
 
 
 const GreyColorRange = ({colorList, isGreyLocked,setIsGreyLocked}) => {
-	if (!colorList || colorList.length === 0) {
-		return null;
-	}
+
 	const [colorName, setColorName] = useState("")
 	const [formattedTailwindData, setFormattedTailwindData] = useState("");
 	const [open, setOpen] = useState(false);
+	const [isLoading,setIsLoading] = useState(true)
 
 	useEffect(()=>{
+		if (!colorList || colorList.length === 0) {
+			setIsLoading(true)
+			return;
+		}
+		setIsLoading(false)
 		if(colorList){
 			const nearestColorName = nearest(colorList[4].hex).name
 			setColorName(nearestColorName)
@@ -83,6 +87,8 @@ const GreyColorRange = ({colorList, isGreyLocked,setIsGreyLocked}) => {
 	const handleLockGrey = (newState) => {
     setIsGreyLocked(newState)
   } 
+	
+	if(isLoading) return null
 
 	return (
 		<div className='w-full flex flex-col gap-6'>

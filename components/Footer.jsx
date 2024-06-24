@@ -105,7 +105,7 @@ const Footer = () => {
 							Disclosure
 						</div>
 						<span className='text-left w-fit text-neutral-500 text-pretty cursor-not-allowed'>
-							Whatever data/colors you get from my website, you are free to take it entirely. You do not need to pay me, credit me or this website. You are welcome.
+							Whatever data/colors you get from my website, you are free to take it entirely. You do not need to pay/credit me or this website. You are welcome.
 						</span>
 					</div>
 					</div>

@@ -30,14 +30,18 @@ const nearest = nearestColor.from(colors);
 
 
 const ColorGroup = ({colorList, anchorColorIndex}) => {
-  if (!colorList || colorList.length === 0 || anchorColorIndex === undefined) {
-    return null;
-  }
+
   const [colorName, setColorName] = useState("")
   const [formattedTailwindData, setFormattedTailwindData] = useState("");
   const [open, setOpen] = useState(false);
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(()=>{
+    if (!colorList || colorList.length === 0 || anchorColorIndex === undefined) {
+      setIsLoading(true)
+      return;
+    }
+    setIsLoading(false)
     if(colorList){
       const nearestColorName = nearest(colorList[anchorColorIndex].hex).name
       setColorName(nearestColorName)
@@ -77,7 +81,7 @@ const ColorGroup = ({colorList, anchorColorIndex}) => {
   }
   
 
-
+	if(isLoading) return null
   return (
     <div className='w-full flex flex-col gap-6'>
       <div className='flex flex-row justify-between'>

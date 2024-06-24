@@ -7,6 +7,7 @@ import DemoGroup from './DemoGroup';
 import UtilitiesColorGroup from './UtilitiesColorGroup';
 import ColorizeIcon from '@mui/icons-material/Colorize';
 import GreyColorGroup from './GreyColorGroup';
+import DemoTooltip from './DemoTooltip';
 
 const generateUtilitiesRange = (lightness,saturation) => {
   //takes in saturation and color
@@ -49,16 +50,19 @@ const generateUtilitiesRange = (lightness,saturation) => {
     [330,"Urgent"], //hotpink (attention)
   ]
 
-  const colorOutputs = [] //[[["#ffffff","#ffffff","#ffffff"],"caution"],[]]
+  const colorOutputs = [] //[{hueGroup:[{shade:"1",hue:"#97AFE2"},{shade:"2",hue:"#97AFE2"},{shade:"3",hue:"#97AFE2"}],hueType:"Danger"},{},{}]
 
   for(let [hue,hueType] of huePositions){
     const hueGroup = []
+    let shadeCounter = 0
     for(let lightnessLevel of lightnessLevels){
-      hueGroup.push(chroma(hue,saturationLevel,lightnessLevel,"hsl").hex())
+      hueGroup.push({shade:shadeCounter,hex:chroma(hue,saturationLevel,lightnessLevel,"hsl").hex()})
+      shadeCounter++
     }
-    const hueOutputs = [[...hueGroup],hueType]
-    colorOutputs.push([...hueOutputs])
+    const hueOutputs = {"hueGroup":[...hueGroup],"hueType":hueType}
+    colorOutputs.push({...hueOutputs})
   }
+  // console.log(JSON.stringify(colorOutputs))
   return colorOutputs
 
 }
@@ -156,15 +160,15 @@ const generateGreyRange = (hue,saturation=0.05) => {
       }
     )
   }
-  console.log(JSON.stringify(colorOutputs))
+  // console.log(JSON.stringify(colorOutputs))
   return colorOutputs
 
 }
 
 const ColorRange = () => {
-  
+  // const [isLoading, setIsLoading] = useState(true)
   //Main Color
-  const [mainColor, setMainColor] = useState("5c00ff")
+  const [mainColor, setMainColor] = useState("#2400d5")
 
   //Color Infos
   const [HEX, setHEX] = useState(chroma(mainColor).hex())
@@ -196,6 +200,8 @@ const ColorRange = () => {
   const [isGreyLocked,setIsGreyLocked] = useState(false)
 
   useEffect(()=>{
+    // if(!mainColor) setIsLoading(true)
+    // setIsLoading(false)
     // console.log("use effect triggered")
     if(chroma.valid(mainColor)){
       // console.log("use effect triggered, setting main color")
@@ -242,7 +248,7 @@ const ColorRange = () => {
 
 
   const handleHEXChange = (value) => {
-    console.log("Hex changed")
+    // console.log("Hex changed")
     // console.log(value.length, value.length>5)
     setTempHEX(value)
     if(chroma.valid(value)&&value.length>5){
@@ -254,7 +260,7 @@ const ColorRange = () => {
   }
 
   const handleRGBChange = (value, position) => {
-    console.log("RGB changed")
+    // console.log("RGB changed")
     if(isNaN(value)) return false
     setTempRGB(prev => {
       const adjustedRGB = [...prev.slice(0, position), Number(value), ...prev.slice(position + 1)];
@@ -268,7 +274,7 @@ const ColorRange = () => {
   };
 
   const handleHSLChange = (value, position) => {
-    console.log("HSL changed")
+    // consolno e.log("HSL changed")
     if(isNaN(value)) return false
     
     setTempHSL(prev => {
@@ -299,8 +305,7 @@ const ColorRange = () => {
   const [eyedropAvailable, setEyedropAvailable] = useState(false)
   
   useEffect(()=>{
-    console.log("EyeDropper" in window?true:false)
-    console.log(window.EyeDropper?true:false)
+    console.log(window.EyeDropper?"Eye Dropper Allowed":false)
     setEyedropAvailable("EyeDropper" in window?true:false)
   },[])
 
@@ -366,6 +371,8 @@ const ColorRange = () => {
 
     return () => document.removeEventListener("keydown", handleRandomColor);
   }, []);
+
+  // if(isLoading) return null
 
   return (
     <div className='container mx-auto max-w-5xl px-5'>
@@ -455,6 +462,7 @@ const ColorRange = () => {
         />
       </div>
 
+      {/* <DemoTooltip/> */}
       
     </div>
   )

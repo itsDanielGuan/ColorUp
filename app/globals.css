@@ -21,3 +21,24 @@
     border-radius:5px
 }
 
+
+::-webkit-scrollbar {
+  @apply rounded-full;
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-neutral-500
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #CCC;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #FFF;
+}
