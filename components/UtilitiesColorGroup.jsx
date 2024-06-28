@@ -19,9 +19,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import LockIcon from '@mui/icons-material/Lock';
 
 const shadeName = {
-  0:"300",
-  1:"500",
-  2:"700"
+  0:"0",
+  1:"1",
+  2:"2"
 }
 
 const transformData = (colorName,colorList) => {
