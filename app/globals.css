@@ -42,3 +42,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #FFF;
 }
+
+.democardUtils {
+  @apply border border-transparent px-4 py-2 text-center rounded-full transform hover:-translate-y-1 transition-transform ease-out
+}
+
+
+.democardUtilsBorder {
+  @apply border
+}

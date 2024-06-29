@@ -15,11 +15,11 @@ const Header = () => {
 		}
 	}
   return (
-    <div className=' z-50 sticky top-0 w-full bg-neutral-950 border-neutral-700 border-b'>
-      <div className='container mx-auto items-center flex flex-row justify-between py-2 px-8'>
+    <div className=' z-50 sticky top-0 w-full bg-neutral-950 border-neutral-800 border-b min-h-[56px] items-center flex flex-col justify-center'>
+      <div className='container mx-auto items-center flex flex-row justify-between py-2 px-8 text-sm'>
         <div className='flex flex-row gap-4 text-white'>
           {/* <span className='text-lg'>LOGO</span> */}
-          <button onClick={handleHomeScroll} className='text font-bold group hover:text-indigo-500 transition-colors ease-in-out'>
+          <button onClick={handleHomeScroll} className='text-xl font-bold group hover:text-indigo-500 transition-colors ease-in-out'>
             Color
             <span className='text-indigo-500 group-hover:text-white'>
               Up
@@ -27,9 +27,9 @@ const Header = () => {
           </button>
         </div>
         <div className='flex flex-row gap-2'>
-          <button className='rounded-lg transition-colors  ease-in-out px-4 py-2 border border-neutral-500 hover:border-neutral-300 text-neutral-500 hover:text-neutral-300'>
+          <button className='font-medium rounded-full text-sm px-4 py-2 bg-neutral-300 hover:bg-neutral-300 text-neutral-800 hover:text-neutral-500'>
             <span>
-              Log In
+              Sign In
             </span>
           </button>
           {/* <button className='rounded transition-colors ease-in-out px-4  bg-neutral-700 hover:bg-neutral-500 text-neutral-200 hover:text-white gap hidden md:flex items-center'>

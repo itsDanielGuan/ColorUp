@@ -20,20 +20,20 @@ const generateUtilitiesRange = (lightness,saturation) => {
 
   let midLightness = Number(lightness)
 
-  if(midLightness>0.65){
-    midLightness=0.65
-  } else if (midLightness<0.35){
-    midLightness=0.35
+  if(midLightness>0.6){
+    midLightness=0.6
+  } else if (midLightness<0.4){
+    midLightness=0.4
   }
 
-  const lightnessLevels = [midLightness+0.2,midLightness,midLightness-0.2]
+  const lightnessLevels = [midLightness+0.25,midLightness,midLightness-0.25]
   // console.log(lightnessLevels)
   // const lightnessLevels = [
   //   0.7,0.5,0.3
   // ]
   let saturationLevel = saturation
-  if(saturationLevel < 0.25){
-    saturationLevel = 0.25
+  if(saturationLevel < 0.7){
+    saturationLevel = 0.7
   }
 
   const huePositions = [

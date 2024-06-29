@@ -23,7 +23,7 @@ const Footer = () => {
 	}
 
   return (
-    <div className='text-white bg-neutral-950 border-neutral-700 border-t w-full'>
+    <div className='text-white bg-neutral-950 border-neutral-800 border-t w-full'>
 			<div className='container mx-auto w-full py-12 px-8 text-neutral-500 flex flex-row items-center'>
 
 				<div className='flex flex-col items-center xl:items-start xl:flex-row justify-between w-full gap-y-12'>

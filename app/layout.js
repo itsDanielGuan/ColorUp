@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ColorUp | By Daniel",
-  description: "Color Up your websites simply, quickly. Generate comprehensive palettes with primary, secondary, neutrals and utilities with powerful live demos.",
+  description: "Generate comprehensive palettes with primary, secondary, neutrals and utilities with powerful live demos. Designed for TailWind and CSS compatibility. Save and Export your favourite color palettes as JSON and many more. Color Up your websites simply, quickly. ",
 };
 
 export default function RootLayout({ children }) {
