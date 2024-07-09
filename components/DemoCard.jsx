@@ -309,12 +309,38 @@ const DemoCard = ({variant, colorList, utilitiesColorList, greyColorList, setToo
       )
     } else if (variant===9){
       setContent(
-        <div style={{}} className='w-full h-full'>
-          <div>
-            Demo {variant}: {colorList[variant%11].hex}
-          </div>
-          <div>
-
+        <div style={{}} className='w-full h-full text-white bg-white bg-opacity-0'>
+          <p className='py-6 text-xl text-center font-medium text-neutral-300'>
+            Primary Buttons
+          </p>
+          <div className='flex flex-row justify-center'>
+            <div className='flex flex-col gap-3 w-fit'>
+              <button style={{backgroundColor:colorList[4].hex,color:colorList[10].hex}} className='democardPrimary'
+                onMouseOver={(e)=>handleEnter(e,colorList[4],"Primary Filled Background",colorList[10],"Primary Text")} onMouseOut={e=>handleExit(e)}
+              >
+                Filled
+              </button>
+              <button style={{backgroundColor:colorList[8].hex,color:colorList[2].hex}} className='democardPrimary'
+                onMouseOver={(e)=>handleEnter(e,colorList[8],"Primary Alternate Background",colorList[2],"Grey Text")} onMouseOut={e=>handleExit(e)}
+              >
+                Alternate
+              </button>
+              <button style={{borderColor:colorList[4].hex,color:colorList[4].hex}} className='democardPrimary'
+                onMouseOver={(e)=>handleEnter(e,colorList[4],"Primary Outline Border",colorList[4],"Primary Outline Text")} onMouseOut={e=>handleExit(e)}
+              >
+                Outline
+              </button>
+              <button style={{backgroundColor:colorList[2].hex,color:colorList[8].hex}} className='democardPrimary'
+                onMouseOver={(e)=>handleEnter(e,colorList[2],"Primary Tonal Background",colorList[8],"Primary Tonal Text")} onMouseOut={e=>handleExit(e)}
+              >
+                Tonal
+              </button>
+              <button style={{backgroundColor:colorList[4].hex,color:colorList[2].hex}} className='democardPrimary'
+                onMouseOver={(e)=>handleEnter(e,colorList[4],"Primary Disabled Background",colorList[2],"Primary Disabled Text")} onMouseOut={e=>handleExit(e)}
+              >
+                Disabled
+              </button>
+            </div>
           </div>
         </div>
       )
@@ -325,7 +351,6 @@ const DemoCard = ({variant, colorList, utilitiesColorList, greyColorList, setToo
             Demo {variant}: {colorList[variant%11].hex}
           </div>
           <div>
-
           </div>
         </div>
       )

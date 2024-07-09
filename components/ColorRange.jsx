@@ -8,6 +8,7 @@ import UtilitiesColorGroup from './UtilitiesColorGroup';
 import ColorizeIcon from '@mui/icons-material/Colorize';
 import GreyColorGroup from './GreyColorGroup';
 import DemoTooltip from './DemoTooltip';
+import CallToAction from './CallToAction';
 
 const generateUtilitiesRange = (lightness,saturation) => {
   //takes in saturation and color
@@ -377,9 +378,9 @@ const ColorRange = () => {
   return (
     <div className='container mx-auto max-w-5xl px-5'>
       <div className='container mx-auto px-4 pt-16 pb-6 flex flex-col items-center gap-6'>  
-    	  <p className='max-w-[500px] text-center text-white font-bold text-5xl'>
-          <span style={{textDecorationColor:HEX}} className='underline decoration-indigo-700'>Color Up</span> your websites quickly.          
-        </p>
+    	  <h1 className='max-w-[500px] text-center text-white font-bold text-5xl'>
+          <span style={{textDecorationColor:HEX,color:colorList.length===2?colorList[0][0]?.hex:"white"}} className='underline decoration-indigo-700'>Color Up</span> your websites quickly.          
+        </h1>
         <p className='max-w-[800px] text-center text-neutral-300 text-wrap px-5'>
           Space to randomise. Use this to generate a unique color palette.
         </p>
@@ -461,8 +462,11 @@ const ColorRange = () => {
           greyColorList={greyColorList}
         />
       </div>
-
-      {/* <DemoTooltip/> */}
+      
+      <div className='w-full mt-12'>
+        <CallToAction colorList={colorList[0]}/>
+      </div>
+      
       
     </div>
   )
