@@ -6,7 +6,7 @@ import DoneIcon from '@mui/icons-material/Done';
 const planBenefits = {
   basic:["Free","Generate primary colors","Exporting"],
   premium:["Free","Everyting in Basic","Generate more palettes","Save palettes","Check contrasts"],
-  business:["Free","Everything in Premium","Generate many more palettes","Live showcase of palettes","Start a business","Unlimited live support (through mail)"],
+  business:["Free","Everything in Premium","Generate many more palettes","Live showcase of palettes","Start a business","Live support (through mail)"],
 }
 
 
@@ -19,15 +19,15 @@ const CallToAction = ({colorList}) => {
       </p>
 
       <div style={{color:colorList[1].hex}} className='grid grid-cols-1 lg:grid-cols-3 grid-rows-3 lg:grid-rows-1  justify-center items-center mx-0 xl:-mx-24 '>
-        <div style={{borderColor:colorList[1].hex}} className='border-2 lg:border-r-0 backdrop-blur-lg rounded-xl lg:rounded-r-none h-[400px] w-full py-8'>
-          <div className='px-8 flex flex-col justify-between h-full'>
+        <div style={{borderColor:colorList[1].hex}} className='border-2 lg:border-r-0 backdrop-blur-lg rounded-xl lg:rounded-r-none h-1 min-h-[400px] w-full py-8'>
+          <div className='px-8 flex flex-col h-full justify-between'>
             <div>
               <h3 style={{color:colorList[3].hex}} className='font-bold text-2xl'>
                 Basic
               </h3>
               <div className='text-4xl'>
                 $0
-                <span className='text-sm inline-block lg:block xl:inline-block'>
+                <span className='text-sm block sm:inline-block lg:block xl:inline-block '>
                   /hr, Free forever (Adobe could never)
                 </span>
               </div>
@@ -54,17 +54,17 @@ const CallToAction = ({colorList}) => {
           </div>
         </div>
 
-        <div style={{borderColor:colorList[1].hex, backgroundColor:colorList[1].hex, color:colorList[9].hex}} className='border-2 backdrop-blur-lg rounded-xl pt-[70px] pb-[82px] h-[500px] bg-white text-black'>
+        <div style={{borderColor:colorList[1].hex, backgroundColor:colorList[1].hex, color:colorList[9].hex}} className='border-2 backdrop-blur-lg rounded-xl pt-[70px] pb-[82px] h-1 min-h-[500px] bg-white text-black'>
           <div className='px-8 flex flex-col justify-between h-full'>
             <div>
               <h3 style={{color:colorList[7].hex}} className='font-bold text-2xl'>
                 Premium
               </h3>
-              <div className='text-5xl'>
+              <div className='text-5xl '>
                 $0
-                <span className='text-sm leading-3 inline-block lg:block xl:inline-block'>
+                <span className='text-sm block sm:inline-block lg:block xl:inline-block '>
                 /Quadrimester, paid {" "} 
-                  <Link className='leading-3' href="https://www.adobe.com/sg/creativecloud/business-plans.html?plan=team&step=2" target="_blank" rel="noopener noreferrer">
+                  <Link className='' href="https://www.adobe.com/sg/creativecloud/business-plans.html?plan=team&step=2" target="_blank" rel="noopener noreferrer">
                     Ohnosecondly <ArrowOutwardIcon className='text-sm -mt-2 -ml-1'/>
                   </Link>
                 </span>
@@ -92,7 +92,7 @@ const CallToAction = ({colorList}) => {
           </div>
         </div>
 
-        <div style={{borderColor:colorList[1].hex}} className='border-2 lg:border-l-0 backdrop-blur-lg rounded-xl lg:rounded-l-none h-[400px] w-full py-8'>
+        <div style={{borderColor:colorList[1].hex}} className='border-2 lg:border-l-0 backdrop-blur-lg rounded-xl lg:rounded-l-none min-h-[400px] h-1 w-full py-8'>
           <div className='px-8 flex flex-col justify-between h-full'>
             <div>
               <h3 style={{color:colorList[3].hex}} className='font-bold text-2xl'>
@@ -100,7 +100,7 @@ const CallToAction = ({colorList}) => {
               </h3>
               <div className='text-4xl'>
                 $0
-                <span className='text-sm'>
+                <span className='text-sm block sm:inline-block lg:block xl:inline-block '>
                   /month, First month free on us!
                 </span>
               </div>
