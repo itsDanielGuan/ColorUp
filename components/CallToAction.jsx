@@ -47,7 +47,7 @@ const CallToAction = ({colorList}) => {
             </div>
             
             <div className='mx-auto w-full'>
-              <button style={{backgroundColor:colorList[0].hex, color:colorList[9].hex}} className='bg-white text-black px-6 py-2 w-full rounded-full font-bold'>
+              <button style={{backgroundColor:colorList[0].hex, color:colorList[9].hex}} className='bg-white text-black px-6 py-2 w-full rounded-full font-bold transform hover:-translate-y-1 transition-transform ease-out'>
                 Get started
               </button>
             </div>
@@ -85,7 +85,7 @@ const CallToAction = ({colorList}) => {
             </div>
             
             <div className='mx-auto w-full'>
-              <button style={{ backgroundColor:colorList[7].hex, color:colorList[1].hex}} className='bg-black text-white px-6 py-2 rounded-full w-full font-bold'>
+              <button style={{ backgroundColor:colorList[7].hex, color:colorList[1].hex}} className='bg-black text-white px-6 py-2 rounded-full w-full font-bold transform hover:-translate-y-1 transition-transform ease-out'>
                 Try free for all months
               </button>
             </div>
@@ -120,7 +120,7 @@ const CallToAction = ({colorList}) => {
             </div>
             
             <div className='mx-auto w-full'>
-              <button style={{backgroundColor:colorList[0].hex, color:colorList[9].hex}} className='bg-white text-black px-6 py-2 w-full rounded-full font-bold'>
+              <button style={{backgroundColor:colorList[0].hex, color:colorList[9].hex}} className='bg-white text-black px-6 py-2 w-full rounded-full font-bold transform hover:-translate-y-1 transition-transform ease-out'>
                 Learn more
               </button>
             </div>
