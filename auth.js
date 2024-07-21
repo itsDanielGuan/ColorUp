@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
+const dotenv = require('dotenv')
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
