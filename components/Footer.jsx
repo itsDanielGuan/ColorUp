@@ -95,6 +95,9 @@ const Footer = () => {
 							<Link className='text-left w-fit hover:text-neutral-300' href="https://unlicense.org/" rel="noopener noreferrer" target="_blank">
 								License: The Unlicense
 							</Link>
+							<Link className='text-left w-fit hover:text-neutral-300' href="/privacy">
+								Privacy Policy
+							</Link>
 							<Link href="/credits" className='text-left w-fit hover:text-neutral-300'>
 								Credits
 							</Link>

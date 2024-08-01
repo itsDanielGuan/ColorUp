@@ -55,3 +55,7 @@
 .democardUtilsBorder {
   @apply border
 }
+
+.privacyheading {
+  @apply font-bold text-xl mt-6
+}
