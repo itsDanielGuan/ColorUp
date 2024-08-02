@@ -33,8 +33,8 @@ const generateUtilitiesRange = (lightness,saturation) => {
   //   0.7,0.5,0.3
   // ]
   let saturationLevel = saturation
-  if(saturationLevel < 0.7){
-    saturationLevel = 0.7
+  if(saturationLevel < 0.8){
+    saturationLevel = 0.8
   }
 
   const huePositions = [

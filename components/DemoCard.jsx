@@ -1,5 +1,11 @@
 import React,{ useEffect, useState } from 'react'
 import DemoTooltip from './DemoTooltip'
+import colorFestival from '../public/colorFestival.jpg'
+import Image from 'next/image'
+import WarningIcon from '@mui/icons-material/Warning';
+import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import BackHandIcon from '@mui/icons-material/BackHand';
+import CookieIcon from '@mui/icons-material/Cookie';
 
 const DemoCard = ({variant, colorList, utilitiesColorList, greyColorList, setTooltipData}) => {
   // console.log(colorList)
@@ -243,34 +249,108 @@ const DemoCard = ({variant, colorList, utilitiesColorList, greyColorList, setToo
       )
     } else if (variant===3){
       setContent(
-        <div style={{}} className='w-full h-full'>
-          <div>
-            Demo {variant}: {colorList[variant%11].hex}
-          </div>
-          <div>
-
-          </div>
+        <div className='w-full h-full relative' style={{backgroundColor:colorList[2].hex}}
+        onMouseOver={(e)=>handleEnter(e,colorList[2],"Primary background")} onMouseOut={e=>handleExit(e)}>
+            <div className='absolute w-[130%] aspect-square overflow-clip rounded-full left-0 top-0 -translate-y-[40%]'>
+              <Image className='object-cover h-[450px] transform translate-y-12' src={colorFestival}>
+              </Image>
+              <div className='absolute w-80 h-80 border-[24px] rounded-full top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2' style={{borderColor:colorList[2].hex}}
+                onMouseOver={(e)=>handleEnter(e,colorList[2],"Primary background")} onMouseOut={e=>handleExit(e)}>
+              </div>
+              <div className='absolute w-52 h-52 border-[24px] rounded-full top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2' style={{borderColor:colorList[2].hex}}
+                onMouseOver={(e)=>handleEnter(e,colorList[2],"Primary background")} onMouseOut={e=>handleExit(e)}
+              >
+              </div>
+            </div>
+            <div className='absolute bottom-0 py-6 px-8 text-3xl font-bold' >
+              <p className='' style={{color:colorList[8].hex}}
+                onMouseOver={(e)=>handleEnter(e,colorList[8],"Primary Text")} onMouseOut={e=>handleExit(e)}
+              >ColorUp. </p>
+              <p className='' style={{color:colorList[6].hex}}
+                onMouseOver={(e)=>handleEnter(e,colorList[6],"Primary Text")} onMouseOut={e=>handleExit(e)}
+              >Palette!</p>
+              <p className='' style={{color:colorList[4].hex}}
+                onMouseOver={(e)=>handleEnter(e,colorList[4],"Primary Text")} onMouseOut={e=>handleExit(e)}
+              >Free & Open.</p>
+            </div>
         </div>
       )
     } else if (variant===4){
       setContent(
-        <div style={{}} className='w-full h-full'>
-          <div>
-            Demo {variant}: {colorList[variant%11].hex}
+        <div style={{backgroundColor:greyColorList[10].hex}} className='w-full h-full relative flex flex-col items-end justify-center'
+          onMouseOver={(e)=>handleEnter(e,greyColorList[10],"Grey Background")} onMouseOut={e=>handleExit(e)}
+        >
+          <div className='absolute top-1/2 left-0 transform -translate-y-1/2 flex flex-col gap-6 text-6xl'>
+            <p style={{color:greyColorList[9].hex}} className='font-bold  transform -translate-x-12'
+              onMouseOver={(e)=>handleEnter(e,greyColorList[9],"Grey Text")} onMouseOut={e=>handleExit(e)}
+            >
+              DESIGN & <br/>
+              DIRECTION
+            </p>
+            <p style={{color:greyColorList[9].hex}} className='font-bold'
+              onMouseOver={(e)=>handleEnter(e,greyColorList[9],"Grey Text")} onMouseOut={e=>handleExit(e)}
+            >
+              DESIGN & <br/>
+              DIRECTION
+            </p>
+            <p style={{color:greyColorList[9].hex}} className='font-bold transform translate-x-12'
+              onMouseOver={(e)=>handleEnter(e,greyColorList[9],"Grey Text")} onMouseOut={e=>handleExit(e)}
+            >
+              DESIGN & <br/>
+              DIRECTION
+            </p>
           </div>
-          <div>
+          <div className='font-bold text-3xl z-10 w-fit flex flex-col items-end px-5' style={{color:greyColorList[5].hex}}
+            onMouseOver={(e)=>handleEnter(e,greyColorList[5],"Grey Text")} onMouseOut={e=>handleExit(e)}
+          >
+            Greyscale is 
+            <br/>
+            <p>
+            Equally {" "}
+            <span className='italic' style={{color:greyColorList[1].hex}}
+              onMouseOver={(e)=>handleEnter(e,greyColorList[1],"Grey Text")} onMouseOut={e=>handleExit(e)}
+            >SEXY</span>
+            </p>
 
+            <button className='px-6 py-2 rounded-lg text-base w-fit mix-blend-screen mt-4' style={{color:greyColorList[9].hex, backgroundColor:greyColorList[1].hex}}
+              onMouseOver={(e)=>handleEnter(e,greyColorList[1],"Grey Button",greyColorList[9],"Grey Text")} onMouseOut={e=>handleExit(e)}
+            >
+              ColorUp
+            </button>
           </div>
+
         </div>
       )
     } else if (variant===5){
       setContent(
-        <div style={{}} className='w-full h-full'>
-          <div>
-            Demo {variant}: {colorList[variant%11].hex}
-          </div>
-          <div>
-
+        <div 
+        // style={{backgroundColor:colorList[0].hex}} 
+        className='w-full h-full flex flex-col py-6 pr-16 bg-white/10'>
+          <div className='flex flex-col relative'>
+            <div className='aspect-square w-64 rounded-full blur-xl absolute top-4 left-4 bg-red-500 opacity-25 transform -translate-x-28 -translate-y-24'>
+            </div>
+            <div className='aspect-square w-64 rounded-full blur-xl absolute top-24 left-24 bg-yellow-500 opacity-25 transform -translate-x-10 -translate-y-24'>
+            </div>
+            <div className='aspect-square w-64 rounded-full blur-xl absolute top-44 left-12 bg-green-500 opacity-25 transform -translate-x-24 -translate-y-24'>
+            </div>
+            <div className='aspect-square w-64 rounded-full blur-xl absolute top-64 left-20 bg-blue-500 opacity-25 transform -translate-x-10 -translate-y-24'>
+            </div>
+            <div className='rounded-full p-4 px-6 opacity-90 w-fit h-fit flex flex-row gap-3 items-center transform rotate-12 absolute top-4 left-4' style={{backgroundColor:utilitiesColorList[0].hueGroup[0].hex}}>
+              <WarningIcon className='opacity-100' style={{color:utilitiesColorList[0].hueGroup[2].hex}}/>
+              <span style={{color:utilitiesColorList[0].hueGroup[2].hex}} className=' text-nowrap font-bold'> Useful colors</span>
+            </div>
+            <div className='rounded-full p-4 px-6 opacity-90 w-fit h-fit flex flex-row gap-3 items-center transform rotate-[-6deg] absolute top-24 left-24' style={{backgroundColor:utilitiesColorList[2].hueGroup[0].hex}}>
+              <AirplanemodeActiveIcon className='opacity-100' style={{color:utilitiesColorList[2].hueGroup[2].hex}}/>
+              <span style={{color:utilitiesColorList[2].hueGroup[2].hex}} className=' text-nowrap font-bold'>Get up to <span className='italic'>SPEED</span></span>
+            </div>
+            <div className='rounded-full p-4 px-6 opacity-90 w-fit h-fit flex flex-row gap-3 items-center transform rotate-[6deg] absolute top-44 left-12' style={{backgroundColor:utilitiesColorList[3].hueGroup[0].hex}}>
+              <BackHandIcon className='opacity-100' style={{color:utilitiesColorList[3].hueGroup[2].hex}}/>
+              <span style={{color:utilitiesColorList[3].hueGroup[2].hex}} className=' text-nowrap font-bold'>Can't Stop.</span>
+            </div>
+            <div className='rounded-full p-4 px-6 opacity-90 w-fit h-fit flex flex-row gap-3 items-center transform rotate-[-8deg] absolute top-64 left-20' style={{backgroundColor:utilitiesColorList[6].hueGroup[0].hex}}>
+              <CookieIcon className='opacity-100' style={{color:utilitiesColorList[6].hueGroup[2].hex}}/>
+              <span style={{color:utilitiesColorList[6].hueGroup[2].hex}} className=' text-nowrap font-bold'>Take a break!</span>
+            </div>
           </div>
         </div>
       )
